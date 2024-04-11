@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Message Bot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #6359f0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="text"],
+        textarea,
+        input[type="email"],
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .bot-message {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-left: 4px solid #4CAF50;
+            margin-bottom: 10px;
+        }
+
+        .user-message {
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-left: 4px solid #ccc;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Message Bot</h2>
+        <div class="conversation" id="conversation">
+            <!-- Bot's initial message -->
+            <div class="bot-message">
+                <p>Welcome! How can I assist you today?</p>
+            </div>
+        </div>
+        <form id="messageForm">
+            <label for="userMessage">Your Message:</label>
+            <input type="text" id="userMessage" name="userMessage" required>
+            <input type="submit" value="Send">
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('messageForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form submission
+            const userMessage = document.getElementById('userMessage').value.trim();
+            if (userMessage !== '') {
+                appendUserMessage(userMessage);
+                processMessage(userMessage);
+                document.getElementById('userMessage').value = ''; // Clear input field
+            }
+        });
+
+        function appendUserMessage(message) {
+            const conversation = document.getElementById('conversation');
+            const userMessageElement = document.createElement('div');
+            userMessageElement.classList.add('user-message');
+            userMessageElement.innerHTML = `<p>${message}</p>`;
+            conversation.appendChild(userMessageElement);
+        }
+
+        function appendBotMessage(message) {
+            const conversation = document.getElementById('conversation');
+            const botMessageElement = document.createElement('div');
+            botMessageElement.classList.add('bot-message');
+            botMessageElement.innerHTML = `<p>${message}</p>`;
+            conversation.appendChild(botMessageElement);
+        }
+
+        function processMessage(message) {
+            // Replace this with your logic to handle different types of messages
+            // For simplicity, just a couple of example responses are provided here
+            let botResponse = '';
+            if (message.toLowerCase().includes('services')) {
+                botResponse = "Our services include web development, design, and more. How can I help specifically?";
+            } else if (message.toLowerCase().includes('contact')) {
+                botResponse = "You can contact us through the contact form on our website or via email at adawapaul@gmail.com.";
+            } else {
+                botResponse = "I'm sorry, I couldn't understand that. Could you please rephrase?";
+            }
+            setTimeout(() => {
+                appendBotMessage(botResponse);
+            }, 500); // Simulate bot response delay
+        }
+    </script>
+</body>
+
+</html>
